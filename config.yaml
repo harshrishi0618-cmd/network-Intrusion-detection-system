@@ -1,0 +1,30 @@
+detection:
+  cic_threshold: 0.20         # IsolationForest anomaly threshold for CIC model (higher = fewer unknown alerts)
+  unsw_threshold: 0.20        # IsolationForest anomaly threshold for UNSW model (higher = fewer unknown alerts)
+  rf_confidence: 0.8          # Minimum RF confidence to flag as KNOWN_ATTACK
+  ensemble_votes_required: 2  # How many models must agree (out of 3 if XGBoost trained)
+
+prevention:
+  block_duration: 300         # seconds to block an IP (5 minutes)
+  whitelist:
+    - "127.0.0.1"
+    - "::1"
+    # Add your router/gateway IP here to avoid blocking it:
+    # - "192.168.1.1"
+
+alerts:
+  timeout: 30                 # seconds to wait for human ACK before auto-escalating
+  dedup_window: 300           # seconds: suppress duplicate (IP + decision) alerts
+
+notifications:
+  webhook_url: ""             # Discord or Slack webhook URL — leave empty to disable
+  # Discord example: https://discord.com/api/webhooks/...
+  # Slack example:   https://hooks.slack.com/services/...
+
+capture:
+  flow_window: 10             # seconds between periodic flow exports
+  flow_timeout: 60            # seconds of inactivity before a flow is force-exported
+
+dashboard:
+  refresh_interval: 3000      # milliseconds between auto-refreshes
+  max_alerts_shown: 1000      # cap on rows loaded from DB
